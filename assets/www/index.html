@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+        <meta name="author" content="Kyler Schroeder" />
+
+		<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+		Remove this if you use the .htaccess -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+		<title>qrHuntr</title>
+
+		<!-- Viewport options -->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="HandheldFriendly" content="True">
+		<meta name="MobileOptimized" content="320" />
+        
+        <!-- Smooth fonts in IE Mobile -->
+		<meta http-equiv="cleartype" content="on">
+        
+        <!-- Stylesheets -->
+		<link href="css/style.css" rel="stylesheet" type="text/css">
+		<link href="css/jquery.mobile-1.3.2.min.css" rel="stylesheet" type="text/css">
+        <link href="css/jquery.mobile.structure-1.3.2.min.css" rel="stylesheet" type="text/css">
+        <link href="css/jquery.mobile.theme-1.3.2.min.css" rel="stylesheet" type="text/css">
+
+		<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
+		<link rel="shortcut icon" href="/favicon.ico" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+	</head>
+
+	<body><!-- Starting content section of code -->
+
+		<section data-role="page" id="home">
+
+			<section data-role="header">
+				<header>
+                	<h2 class="centered">Home</h2>
+				</header>
+			</section>
+
+			<section data-role="content">
+                <ul data-role="listview" data-inset="true">
+                    <li>
+                        <a href="#accel">
+                            <h3>Accelerometer</h3>
+                            <p>Going to have accelerometer functionality to assist with compass and geolocation.</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#flick">
+                            <h3>Camera</h3>
+                            <p>Going to integrate the camera with a QR Reader.</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#device">
+                            <h3>Device</h3>
+                            <p>Will get the users basic device information.</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#connection">
+                            <h3>Connection</h3>
+                            <p>Players will be able to identify the type of connection they are currently using.</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#geo">
+                            <h3>Geolocation</h3>
+                            <p>Players will be able to use geolocation to figure out and mark places on a map.</p>
+                        </a>
+                    </li>
+                </ul>
+			</section>
+
+			<section data-role="footer" data-position="fixed" data-id="footNav">
+				<section data-role="navbar">
+					<ul data-filter="true">
+						<li><a href="#qr" data-icon="check">Hunt</a></li>
+						<li><a href="#compass" data-icon="grid">Compass</a></li>
+						<li><a href="#flick" data-icon="check">Flick</a></li>
+					</ul>
+				</section>
+			</section>
+        
+			<section data-role="content">
+					<ul data-role="listview" data-inset="true">
+						<li>
+							<a href="#instagram">
+								<h3>Hipstergram</h3>
+								<p>Players will be able to view photos posted by other players using an event hashtag.</p>
+							</a>
+						</li>
+						<li>
+							<a href="#qr">
+								<h3>QR Reader</h3>
+								<p>A QR Reader will be used to scan QR Codes set up at different places in the hunt.</p>
+							</a>
+						</li>
+					</ul>
+			</section>
+
+			<section data-role="content">
+					<ul data-role="listview" data-inset="true">
+						<li>
+							<a href="#disc1">
+								<h3>Week 1 Discussion</h3>
+      						</a>
+						</li>
+						<li>
+							<a href="#disc2">
+								<h3>Week 2 Discussion</h3>
+                            </a>
+						</li>
+                        <li>
+							<a href="#disc3">
+								<h3>Week 3 Discussion</h3>
+							</a>
+						</li>
+					</ul>
+			</section>
+            
+		</section>
+        
+        <section data-role="page" id="err" data-theme="c" data-add-back-btn="true">
+
+			<section data-role="header">
+				<header>
+                	<h2 class="centered">Error 37 - This page will not exist.</h2>
+				</header>
+			</section>
+
+			<section data-role="content">
+            	Nothing to see here folks.
+            </section>
+            
+            <section data-role="footer" data-position="fixed" data-id="footNav">
+				<section data-role="navbar">
+					<ul data-filter="true">
+						<li><a href="#qr" data-icon="check">Hunt</a></li>
+						<li><a href="#compass" data-icon="grid">Compass</a></li>
+						<li><a href="#flick" data-icon="check">Flick</a></li>
+					</ul>
+				</section>
+			</section>
+        
+        </section>
+        
+        <section data-role="page" id="flick" data-theme="c" data-add-back-btn="true">
+
+			<section data-role="header">
+				<header>
+                	<h2 class="centered">Flick</h2>
+				</header>
+			</section>
+
+			<section data-role="content" data-theme="c" data-add-back-btn="true">
+                <button onclick="capturePhoto();">Capture Photo</button> <br>
+                <button onclick="capturePhotoEdit();">Capture Editable Photo</button> <br>
+                <button onclick="getPhoto(pictureSource.PHOTOLIBRARY);">From Photo Library</button><br>
+                <button onclick="getPhoto(pictureSource.SAVEDPHOTOALBUM);">From Photo Album</button><br>
+                <img style="display:none;width:60px;height:60px;" id="smallImage" src="" />
+                <img style="display:none;" id="largeImage" src="" />
+            </section>
+            
+            <section data-role="footer" data-position="fixed" data-id="footNav">
+				<section data-role="navbar">
+					<ul data-filter="true">
+						<li><a href="#qr" data-icon="check">Hunt</a></li>
+						<li><a href="#compass" data-icon="grid">Compass</a></li>
+						<li><a href="#flick" data-icon="check" class="ui-btn-active ui-state-persist">Flick</a></li>
+					</ul>
+				</section>
+			</section>
+        
+        </section>
+        
+        <section data-role="page" id="compass" data-theme="c" data-add-back-btn="true">
+
+			<section data-role="header">
+				<header>
+                	<h2 class="centered">Compass</h2>
+				</header>
+			</section>
+
+			<section data-role="content">
+	            <div id="heading">Waiting for heading...</div>
+            </section>
+            
+            <section data-role="footer" data-position="fixed" data-id="footNav">
+				<section data-role="navbar">
+					<ul data-filter="true">
+						<li><a href="#qr" data-icon="check">Hunt</a></li>
+						<li><a href="#compass" data-icon="grid" class="ui-btn-active ui-state-persist">Compass</a></li>
+						<li><a href="#flick" data-icon="check">Flick</a></li>
+					</ul>
+				</section>
+			</section>
+        
+        </section>
+        
+        <section data-role="page" id="geo" data-theme="c" data-add-back-btn="true">
+
+			<section data-role="header">
+				<header>
+                	<h2 class="centered">Geolocation</h2>
+				</header>
+			</section> 
+
+			<section data-role="content">
+                    <article>
+                    	
+                    </article>
+            </section>
+            
+            <section data-role="footer" data-position="fixed" data-id="footNav">
+				<section data-role="navbar">
+					<ul data-filter="true">
+						<li><a href="#qr" data-icon="check">Hunt</a></li>
+						<li><a href="#compass" data-icon="grid">Compass</a></li>
+						<li><a href="#flick" data-icon="check">Flick</a></li>
+					</ul>
+				</section>
+			</section>
+        
+        </section>
+        
+        <section data-role="page" id="instagram" data-theme="c" data-add-back-btn="true">
+
+			<section data-role="header">
+				<header>
+                	<h2 class="centered">Instagram</h2>
+				</header>
+			</section>
+
+			<section data-role="content">
+            
+            	<input name="hashtag" id="hashtag" type="text"><a id="instaButton" data-role="button" data-inline="true" onClick="getVar();">Hit it up!</a>
+            
+           		<h2 id="instagramStatus">Searching Instagram...</h2>
+                <ul id="pullFeed" class="ui-grid-b ui-responsive">
+                </ul>
+            
+                <section data-role="footer" data-position="fixed" data-id="footNav">
+                    <section data-role="navbar">
+                        <ul data-filter="true">
+                            <li><a href="#qr" data-icon="check">Hunt</a></li>
+                            <li><a href="#compass" data-icon="grid">Compass</a></li>
+                            <li><a href="#flick" data-icon="check">Flick</a></li>
+                        </ul>
+                    </section>
+                </section>
+        
+        	</section>
+        
+        </section>
+       
+        
+        <section data-role="page" id="qr" data-theme="c" data-add-back-btn="true">
+
+			<section data-role="header">
+				<header>
+                	<h2 class="centered">QR</h2>
+				</header>
+			</section>
+
+			<section data-role="content">
+				Mark it down!
+            </section>
+            
+            <section data-role="footer" data-position="fixed" data-id="footNav">
+				<section data-role="navbar">
+					<ul data-filter="true">
+						<li><a href="#qr" data-icon="check" class="ui-btn-active ui-state-persist">Hunt</a></li>
+						<li><a href="#compass" data-icon="grid">Compass</a></li>
+						<li><a href="#flick" data-icon="check">Flick</a></li>
+					</ul>
+				</section>
+			</section>
+        
+        </section>
+        
+        <section data-role="page" id="accel" data-theme="c" data-add-back-btn="true">
+
+			<section data-role="header">
+				<header>
+                	<h2 class="centered">Accelerometer</h2>
+				</header>
+			</section>
+
+			<section data-role="content">
+				<div id="accelerometer">Waiting for accelerometer...</div>
+            </section>
+            
+            <section data-role="footer" data-position="fixed" data-id="footNav">
+				<section data-role="navbar">
+					<ul data-filter="true">
+						<li><a href="#qr" data-icon="check" class="ui-btn-active ui-state-persist">Hunt</a></li>
+						<li><a href="#compass" data-icon="grid">Compass</a></li>
+						<li><a href="#flick" data-icon="check">Flick</a></li>
+					</ul>
+				</section>
+			</section>
+        
+        </section>
+        
+        <section data-role="page" id="device" data-theme="c" data-add-back-btn="true">
+
+			<section data-role="header">
+				<header>
+                	<h2 class="centered">Device Info</h2>
+				</header>
+			</section>
+
+			<section data-role="content">
+            	<p id="deviceProperties">Fetching Device Info...</p>
+            </section>
+            
+            <section data-role="footer" data-position="fixed" data-id="footNav">
+				<section data-role="navbar">
+					<ul data-filter="true">
+						<li><a href="#qr" data-icon="check">Hunt</a></li>
+						<li><a href="#compass" data-icon="grid">Compass</a></li>
+						<li><a href="#flick" data-icon="check">Flick</a></li>
+					</ul>
+				</section>
+			</section>
+        
+        </section>
+        
+        <section data-role="page" id="connection" data-theme="c" data-add-back-btn="true">
+
+			<section data-role="header">
+				<header>
+                	<h2 class="centered">Connection Type</h2>
+				</header>
+			</section>
+
+			<section data-role="content">
+            	<p>Fetching your connection type...</p>
+            </section>
+            
+            <section data-role="footer" data-position="fixed" data-id="footNav">
+				<section data-role="navbar">
+					<ul data-filter="true">
+						<li><a href="#qr" data-icon="check">Hunt</a></li>
+						<li><a href="#compass" data-icon="grid">Compass</a></li>
+						<li><a href="#flick" data-icon="check">Flick</a></li>
+					</ul>
+				</section>
+			</section>
+        
+        </section>
+        
+        <section data-role="page" id="disc1" data-theme="c" data-add-back-btn="true">
+
+			<section data-role="header">
+				<header>
+                	<h2 class="centered">Week 1 Discussion</h2>
+				</header>
+			</section>
+
+			<section data-role="content">
+            	<p><strong>1. </strong><strong>Less obvious perks of using 'live' data resources include logins and payments. How could Twitter be used in these two scenarios?</strong></p>
+<p>It&rsquo;s pretty obvious, the perks of using Twitter for logins, no one wants to create an account anymore and why should you?  Everyone that does anything that would need a login already has a Twitter, Facebook or Google account so why not use it for other things?  You can either auto fill forms with the data to create your account or straight up login using Twitter.</p>
+<p>Using Twitter for payments is a little trickier.  I don&rsquo;t really see the purpose for this but you can either send money to another user by using a hashtag or other services allow you to send money to other users via the follow feature, although there are some very dark gray areas about that in Twitters Terms of Service.</p>
+<p><strong>2. </strong><strong>Visit Programmableweb.com and search for JSON-P data sources. Why would we need JSON-P, specifically?</strong></p>
+<p>JSONP allows you to gain access and retrieve data from external domain sources.  This allows developers to easily access public data hosted on someone else&rsquo;s servers.  API&rsquo;s like Instagram and Twitter are common examples but better examples are MLS services such as Zillow or Trulia who subscribe and grab data from countless local MLS services and display it on their own sites.</p>
+<p><strong>3. </strong><strong>Based on the JSON-P search results: what data resource(s) do you think might pair well with which types of Native device features?</strong></p>
+<p>QRdvark will integrate well with the native camera to scan QR Codes.</p>
+<p>Google Maps (or Google Places or Google Static Maps) will work good with geolocation.</p>
+<p>I&rsquo;m thinking about using Clickatell to manage the messages from the native contacts feature.</p>
+<p>And that&rsquo;s really it for the features I&rsquo;m going to be using, not much for the accelerometer or compass that I can find.</p>
+<p><strong>4. </strong><strong>Please describe any design and functionality intentions you may have for your Demo app components this month.</strong></p>
+<p>The main element for my project this month revolves around the camera so that&rsquo;s one native function that is an absolute must, along with geolocation.  My app is going to be a QR scavenger hunt app so I will need to find and use a 3rd party QR code scanner to use in conjunction with my camera.</p>
+<p>Also, I plan on restructuring my app using AJAX to get rid of a lot of the repetitive code.  Basically, my app will have the structure in one page then using AJAX suck the individual documents in the content area of the index page.  You&rsquo;ve probably seen or thought of it before, it seems like the best and lightest weight way to code an app.</p>
+<p><strong>5. </strong><strong>Briefly describe some past 'lessons learned' regarding workflow as it relates to research, design, development, etc.</strong></p>
+<p>The most important thing I&rsquo;ve learned is to just get started.  It&rsquo;s incredibly detrimental to stare at a blank canvas, so if you&rsquo;re in an IDE, get your basic HTLM structure down or write out the names of your functions or simply make a bunch of comments.  It&rsquo;s so much easier to get going when you have something started already, otherwise it&rsquo;s almost like staring into the void.</p>
+            </section>
+            
+            <section data-role="footer" data-position="fixed" data-id="footNav">
+				<section data-role="navbar">
+					<ul data-filter="true">
+						<li><a href="#qr" data-icon="check">Hunt</a></li>
+						<li><a href="#compass" data-icon="grid">Compass</a></li>
+						<li><a href="#flick" data-icon="check">Flick</a></li>
+					</ul>
+				</section>
+			</section>
+        
+        </section>
+        
+        <section data-role="page" id="disc2" data-theme="c" data-add-back-btn="true">
+
+			<section data-role="header">
+				<header>
+                	<h2 class="centered">Week 2 Discussion</h2>
+				</header>
+			</section>
+
+			<section data-role="content">
+            	<p><strong>1. What are some of the ways that you could change your HTML  on your Demo app to be more accessible? (Remember, you can use the  Section tag with jQuery, for instance)</strong></p>
+<p>One thing I really need to do better is to use alt tags and set up  navigation to properly tab through.  The simplest way to keep your app  accessible is to make sure that even if a user is using a screen reader,  they can still navigate the page.  I always forget to put alt tags on  images, which are key if you are trying duplicate the user experience  for a person with visual impairments.  Having your navigation be the  first thing parsed makes navigation much easier for people using a  screen reader.</p>
+<p><strong>2. Visit a video service on the web (like YouTube) and search  for &quot;Screen Reader Demo&quot; and &quot;Mobile Screen Reader&quot; - what are some of  the common frustrations (or common support mechanisms) that you see  among the examples that are given - how could you fix them (or use  them)?</strong></p>
+<p>Screen reading technology has come a long ways in the last 10 years  or so but unfortunately web and application developers have not.  The  most common complaint is not the software but the inability for the  software to work correctly.  Developers often forget (or choose to  ignore) the things that I mention in my first answer which really makes  it hard for some users to use a website or application.</p>
+<p><strong>3. Devices: Please list two devices (and some of their features) that are made specifically to support Accessibility.</strong></p>
+<p>Kindle Fire – I was just thinking about reading on the web then  started thinking about reading on a tablet and eventually the Kindle  popped into my head.  Like Google TalkBack and Apple VoiceOver, Kindle  has a built in screen reader called IVONA which (obviously) turns text  to speech.  Kindle also has the ability to use gestures to navigate to  the Home screen, go back, access notifications, the local context menu  and the accessibility settings.  You can also magnify the content, set  font size, turn on closed captioning and toggle between mono and stereo  if you can only hear out of one ear.</p>
+<p>Firefox – Firefox actually has some pretty decent options for  browsing the web.   Everyone knows about Ctrl+ and Ctrl- for zoom in /  zoom out but you can also zoom the text only by going to the View menu  and selecting Zoom &gt; Zoom Text Only or you can install the Page Zoom  Buttons add-on.  You can tell Firefox not to load images so that alt  text is easier read by going to Tools &gt; Options &gt; Content and  uncheck the &ldquo;Load images automatically&rdquo; box.  This is helpful for  developers as well to make sure our alt tags are properly applied to  everything.  You can alsoturn on the &ldquo;Find As You Type&rdquo; feature, which  allows you to start typing after you load a web page and go directly to a  set of key words.  Tools &gt; Options &gt; Advanced &gt; General &gt;  Accessibility and mark the &ldquo;Search for text when I start typing&rdquo; box.   Finally you can use the Browse With the Caret feature to navigate  through web pages the same as you would a word processor.   Enable/Disable this feature by pressing F7.</p>
+<p><strong>4. Mobile Apps: Please list two apps (either Android or iOS, or both) that are made specifically to support Accessibility.</strong></p>
+<p>LookTel (iOS only) – This is sweet!  I never thought about an app for  this, it scans dollar bills and gives you the denomination and supports  21 different currencies.  It both reads you the denomination out loud  and also gives you a large display with the option for high contrast  mode.</p>
+<p>Parking Mobility (iOS only) – An app designed to socially share the  locations of handicapped parking spaces as well as report abuse of said  parking spots.  This sounds pretty cool but I really wonder how many  people use it and actually need to use it.  I use handicapped spots  every day and I don&rsquo;t know if I&rsquo;ve ever had a problem finding them.   Finding an open one is a different story…  The reporting feature is a  little lame though, it has no direct line to ticketing agencies rather  just to local advocate groups.</p>
+            </section>
+            
+            <section data-role="footer" data-position="fixed" data-id="footNav">
+				<section data-role="navbar">
+					<ul data-filter="true">
+						<li><a href="#qr" data-icon="check">Hunt</a></li>
+						<li><a href="#compass" data-icon="grid">Compass</a></li>
+						<li><a href="#flick" data-icon="check">Flick</a></li>
+					</ul>
+				</section>
+			</section>
+        
+        </section>
+        
+        <section data-role="page" id="disc3" data-theme="c" data-add-back-btn="true">
+
+			<section data-role="header">
+				<header>
+                	<h2 class="centered">Week 3 Discussion</h2>
+				</header>
+			</section>
+
+			<section data-role="content">
+            	Get it done.
+            </section>
+            
+            <section data-role="footer" data-position="fixed" data-id="footNav">
+				<section data-role="navbar">
+					<ul data-filter="true">
+						<li><a href="#qr" data-icon="check">Hunt</a></li>
+						<li><a href="#compass" data-icon="grid">Compass</a></li>
+						<li><a href="#flick" data-icon="check">Flick</a></li>
+					</ul>
+				</section>
+			</section>
+        
+        </section>
+        
+        <!-- JavaScript Links -->
+        <script src="js/jquery-1.10.2.min.js"></script>
+        <script src="js/jquery-migrate-1.2.1.min.js"></script>
+        <!--<script src="js/jquery-1.10.2.min.map"></script>-->
+        <script src="js/jquery.mobile-1.3.2.min.js"></script>
+        <script src="cordova.js"></script>
+        <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+        <script src="js/main.js"></script>
+	</body>
+</html>

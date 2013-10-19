@@ -1,0 +1,51 @@
+@charset "UTF-8";
+/* CSS Document */
+
+ul {
+	list-style-type:none;
+}
+
+.centered {
+	text-align:center;
+}
+
+@media screen and (min-width:1px)  {
+	
+	#instagram {
+		color:#0F0;
+	}
+	
+	#myMap {
+		height:400px;
+		width:600px;
+		padding:0 auto;
+	}
+	
+}
+
+@media screen and (min-width:556px)  {
+	
+	#instagram {
+		color:#00F;
+	}
+	
+	#myMap {
+		height:536px;
+		width:800px;
+		padding:0 auto;
+	}
+	
+} 
+
+@media screen and (min-width:850px)  {
+	
+	#instagram {
+		color:#F00;
+	}
+	
+	#myMap {
+		height:670px;
+		width:1000px;
+		padding:0 auto;
+	}
+}
