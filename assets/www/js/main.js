@@ -1,14 +1,10 @@
 // JavaScript Document
-
-// The watch id references the current `watchAcceleration`
-    //var watchID = null;
 	
 // native variables
 var getAccel,
 	//getGeo,
 	pictureSource,
-	destinationType,
-	getCompass;
+	destinationType;
 
 document.addEventListener("deviceready", onDeviceReady, false);
 
@@ -20,7 +16,6 @@ function onDeviceReady() {
     destinationType=navigator.camera.DestinationType;
 	$('#device').on('pageinit', getDevice);
 	$('#connection').on('pageinit', getConnection);
-	$('#compass').on('pageinit', getComp);
 	$('#accel').on('pageinit', getAccel);
 }
 
@@ -34,7 +29,7 @@ $('#instagramFeed').on('pageinit', function() {
 // Instagram API
 	
 // get variable from textbox
-function getVar() {
+var getVar = function() {
 	$("#instagram").on("click", "#instaButton", function() {
 			console.log("hi");
 			var tag = $("#hashtag").val();
@@ -45,7 +40,7 @@ function getVar() {
 	$.getJSON(url, getFeed);
 	
 	});
-}
+};
 
 var getFeed = function(info) {
 
@@ -68,55 +63,61 @@ var getFeed = function(info) {
 // GeoLocation
 
 $('#geo').on('pageinit', function() {
-        function geoSuccess(position) {
-                var myMap = document.createElement('section');
-                myMap.id = 'geoMap';
-                myMap.style.height = '400px';
-                myMap.style.width = '600px';
+    var geoSuccess = function(position) {
+		alert("Hello");
+		alert('Latitude: '      + position.coords.latitude          + '\n' +
+              'Longitude: '     + position.coords.longitude);		
+		
+		var myMap = document.createElement('section');
+		myMap.id = 'geoMap';
+		myMap.style.height = '400px';
+		myMap.style.width = '600px';
+		
+		document.querySelector('article').appendChild(myMap);
+		
+		var coords = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+		
+		var options = { 
+				zoom: 15,
+				center: coords,
+				mapTypeControl: false,
+				navigationControlOptions: {
+						style: google.maps.NavigationControlStyle.SMALL
+		},
+		
+		mapTypeId: google.maps.MapTypeId.ROADMAP
+		
+		};
+		
+		var map = new google.maps.Map(document.getElementById("geoMap"), options);
+		
+		var marker = new google.maps.Marker({
+				position: coords,
+				map: map,
+				title:"You are here!"
+		});
+    };
+	
+	var geoFail = function(error) {
+		alert('code: '    + error.code    + '\n' +
+          	  'message: ' + error.message + '\n');	
+	};
                 
-                document.querySelector('article').appendChild(myMap);
-                
-                var coords = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-                
-                var options = { 
-                        zoom: 15,
-                        center: coords,
-                        mapTypeControl: false,
-                        navigationControlOptions: {
-                                style: google.maps.NavigationControlStyle.SMALL
-                },
-                
-                mapTypeId: google.maps.MapTypeId.ROADMAP
-                
-                };
-                
-                var map = new google.maps.Map(document.getElementById("geoMap"), options);
-                
-                var marker = new google.maps.Marker({
-                        position: coords,
-                        map: map,
-                        title:"You are here!"
-                });
-        }
-                
-        if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(geoSuccess);
-        } else {
-                error('Geolocation is not supported');
-        }
+        navigator.geolocation.getCurrentPosition(geoSuccess, geoFail);
+
 });
 
 
 // Accelerometer
 
-function accelSuccess(acceleration) {
+var accelSuccess = function(acceleration) {
     alert('Acceleration X: ' + acceleration.x + '\n' +
           'Acceleration Y: ' + acceleration.y + '\n' +
           'Acceleration Z: ' + acceleration.z + '\n' +
           'Timestamp: '      + acceleration.timestamp + '\n');
 };
 
-function accelError() {
+var accelError = function() {
 	alert("Uh, :x!");
 };
 	
@@ -125,31 +126,9 @@ var getAccel = function() {
 };
 
 
-// Compass
-
-function onSuccess(heading) {
-	alert("success");
-    var element = document.getElementById('heading');
-    element.innerHTML = 'Heading: ' + heading.magneticHeading;
-};
-
-function onError(compassError) {
-    alert('Compass error: ' + compassError.code);
-};
-
-var options = {
-    frequency: 3000
-}; // Update every 3 seconds
-
-var getComp = function() {
-	alert("compass");
-	var watchID = navigator.compass.watchHeading(onSuccess, onError, options);
-}
-
-
 // Camera
 
-function onPhotoDataSuccess(imageData) {
+var onPhotoDataSuccess = function(imageData) {
       alert(imageData);
 
       // Get image handle
@@ -164,7 +143,7 @@ function onPhotoDataSuccess(imageData) {
 };
 
 // Called when a photo is successfully retrieved
-function onPhotoURISuccess(imageURI) {
+var onPhotoURISuccess = function(imageURI) {
 	
 	alert(imageURI);
 
@@ -180,14 +159,14 @@ function onPhotoURISuccess(imageURI) {
 };
 
 // A button will call this function
-function capturePhoto() {
+var capturePhoto = function() {
 	// Take picture using device camera and retrieve image as base64-encoded string
 	navigator.camera.getPicture(onPhotoDataSuccess, onFail, {
 		quality: 50, destinationType: destinationType.DATA_URL });
 };
 
 // A button will call this function
-function capturePhotoEdit() {
+var capturePhotoEdit = function() {
 	// Take picture using device camera, allow edit, and retrieve image as base64-encoded string
 	navigator.camera.getPicture(onPhotoDataSuccess, onFail, {
 		quality: 20, allowEdit: true, destinationType: destinationType.DATA_URL
@@ -195,7 +174,7 @@ function capturePhotoEdit() {
 };
 
 // A button will call this function
-function getPhoto(source) {
+var getPhoto = function(source) {
 	// Retrieve image file location from specified source
 	navigator.camera.getPicture(onPhotoURISuccess, onFail, {
 		quality: 50, destinationType: destinationType.FILE_URI, sourceType: source 
@@ -203,7 +182,7 @@ function getPhoto(source) {
 };
 
 // Called if something bad happens.
-function onFail(message) {
+var onFail = function(message) {
 	alert('Failed because: ' + message);
 };
 
@@ -220,18 +199,18 @@ var getDevice = function() {
 
 // Connection
 
-function getConnection() {
-            var connectionType = navigator.connection.type;
+var getConnection = function() {
+	var connectionType = navigator.connection.type;
 
-            var states = {};
-            states[Connection.UNKNOWN]  = 'Unknown connection';
-            states[Connection.ETHERNET] = 'Ethernet connection';
-            states[Connection.WIFI]     = 'WiFi connection';
-            states[Connection.CELL_2G]  = 'Cell 2G connection';
-            states[Connection.CELL_3G]  = 'Cell 3G connection';
-            states[Connection.CELL_4G]  = 'Cell 4G connection';
-            states[Connection.CELL]     = 'Cell generic connection';
-            states[Connection.NONE]     = 'No network connection';
+	var states = {};
+	states[Connection.UNKNOWN]  = 'Unknown connection';
+	states[Connection.ETHERNET] = 'Ethernet connection';
+	states[Connection.WIFI]     = 'WiFi connection';
+	states[Connection.CELL_2G]  = 'Cell 2G connection';
+	states[Connection.CELL_3G]  = 'Cell 3G connection';
+	states[Connection.CELL_4G]  = 'Cell 4G connection';
+	states[Connection.CELL]     = 'Cell generic connection';
+	states[Connection.NONE]     = 'No network connection';
 
-            alert('Connection type: ' + states[connectionType]);
-        }
+	alert('Connection type: ' + states[connectionType]);
+};
